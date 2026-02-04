@@ -16,6 +16,7 @@
 ## demo 📷
 This video shows exporting to excel files, displaying data, and user input validation
 
+[Demo](https://github.com/dfranco01/Work-Automation-v2/blob/main/demo/Screen%20Recording%202026-02-03%20192621.mp4)
 
 ## Ways this project could be impproved 🔍
 - Niether Pandas nor Excel support numbers with leading zero's, as those zero's get automatically removed. I would like to be able to include PERNR numbers with leading zero's for more optionality of numbers
