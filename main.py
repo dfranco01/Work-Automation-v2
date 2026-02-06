@@ -3,12 +3,6 @@ from datetime import datetime
 import faker
 import random
 import string
-#try:
-#    a = int("1")
-#    print(a.isdigit())
-#except:
-#    print("caught")
-#exit()
 
 #validates user input for the appropriate situation
 def input_check(user_input):
@@ -21,14 +15,6 @@ def input_check(user_input):
         while(not user_input.isalpha()):
             user_input = input("Please enter a valid response: ")
         return user_input
-    #if datatype == int:
-    #    while(not user_input.isdigit() or len(str(abs(int(user_input)))) != 6):
-    #        user_input = input("Please enter a valid response: ")
-    #    return user_input
-    #elif datatype == str:
-    #    while(not user_input.isalpha()):
-    #        user_input = input("Please enter a valid response: ")
-    #    return user_input
     
 # if the employee is already in the table, the record's date is updated to today
 def update_date(PERNR, DF):    
