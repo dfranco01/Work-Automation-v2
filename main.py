@@ -2,22 +2,33 @@ import pandas as pd
 from datetime import datetime
 import faker
 import random
-
-# This function is part of psuedo-data initialization, selecting a random first name initial for the 'supervisor' field
-def initial_picker():
-    alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-    return alphabet[random.randint(0, 25)] + "."
+import string
+#try:
+#    a = int("1")
+#    print(a.isdigit())
+#except:
+#    print("caught")
+#exit()
 
 #validates user input for the appropriate situation
-def input_check(user_input, datatype):
-    if datatype == "int":
-        while(not user_input.isdigit() or len(str(abs(int(user_input)))) != 6):
+def input_check(user_input):
+    try:
+        user_input = int(user_input)
+        while(len(str(abs(int(user_input)))) != 6):
             user_input = input("Please enter a valid response: ")
         return user_input
-    elif datatype == "str":
+    except:
         while(not user_input.isalpha()):
             user_input = input("Please enter a valid response: ")
         return user_input
+    #if datatype == int:
+    #    while(not user_input.isdigit() or len(str(abs(int(user_input)))) != 6):
+    #        user_input = input("Please enter a valid response: ")
+    #    return user_input
+    #elif datatype == str:
+    #    while(not user_input.isalpha()):
+    #        user_input = input("Please enter a valid response: ")
+    #    return user_input
     
 # if the employee is already in the table, the record's date is updated to today
 def update_date(PERNR, DF):    
@@ -28,21 +39,21 @@ def update_date(PERNR, DF):
 
 #if the employee does not exist yet, a new record is created
 def new_entry(PERNR, DF):
-    first_name = input_check(input("First Name: "), "str")
-    last_name = input_check(input("Last Name: "), "str")
-    initial = input_check(input("Supervisor first name initial: "), "str")
+    first_name = input_check(input("First Name: "))
+    last_name = input_check(input("Last Name: "))
+    initial = input_check(input("Supervisor first name initial: "))
     while(len(initial) != 1):
         print("Initial can only be one letter")
-        initial = input_check(input("Supervisor first name initial: "), "str")
-    supervisor_lname = input_check(input("Supervisor last name: "), "str")
+        initial = input_check(input("Supervisor first name initial: "))
+    supervisor_lname = input_check(input("Supervisor last name: "))
     supervisor_entry = initial + "." + " " + supervisor_lname
     print(f"You entered: {first_name},{last_name},{supervisor_entry}")
     confirmation = input("Enter 'y' to confirm, any other input implies a mistake: ")
     while(confirmation.upper() != "Y"):
-        first_name = input_check(input("First Name: "), "str")
-        last_name = input_check(input("Last Name: "), "str")
-        initial = input_check(input("Supervisor first name initial: "), "str")
-        supervisor_lname = input_check(input("Supervisor last name: "), "str")
+        first_name = input("First Name: ")
+        last_name = input("Last Name: ")
+        initial = input("Supervisor first name initial: ")
+        supervisor_lname = input("Supervisor last name: ")
         supervisor_entry = initial + "." + " " + supervisor_lname
         print(f"You entered: {first_name},{last_name},{supervisor_entry}")
         confirmation = input("Enter 'y' to confirm, any other input implies a mistake: ")
@@ -68,7 +79,7 @@ for i in range(len(DF)):
     DF.loc[i, "PERNR NUMBER"] = random.randint(100000, 999999)
     DF.loc[i, "EMPLOYEE FIRST NAME"] = faker.first_name()
     DF.loc[i, "EMPLOYEE LAST NAME"] = faker.last_name()
-    DF.loc[i, "SUPERVISOR"] = initial_picker() + " " + faker.last_name()
+    DF.loc[i, "SUPERVISOR"] = string.ascii_uppercase[random.randint(0, 25)] + " " + faker.last_name()
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
@@ -84,7 +95,7 @@ df = df.sort_values(["EMPLOYEE LAST NAME"])
 #WORKFLOW
 print("Let's get to work updating our log.")
 while(True):
-    num = input_check(input("Enter the six-digit PERNR: "), "int")
+    num = input_check(input("Enter the six-digit PERNR: "))
     if search(num):
         print("Found")
         update_date(num, df)
